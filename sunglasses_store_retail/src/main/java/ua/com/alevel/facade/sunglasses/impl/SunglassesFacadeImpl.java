@@ -7,6 +7,8 @@ import ua.com.alevel.dto.sunglasses.SunglassesPDPDto;
 import ua.com.alevel.dto.sunglasses.SunglassesPLPDto;
 import ua.com.alevel.facade.sunglasses.SunglassesFacade;
 import ua.com.alevel.persistence.entity.sunglasses.Sunglasses;
+import ua.com.alevel.processor.InjectLog;
+import ua.com.alevel.service.LoggerService;
 import ua.com.alevel.service.sunglasses.SunglassesService;
 import ua.com.alevel.service.sunglasses.brand.BrandService;
 import ua.com.alevel.service.sunglasses.features.*;
@@ -18,6 +20,8 @@ import java.util.Optional;
 @Service
 public class SunglassesFacadeImpl implements SunglassesFacade {
 
+    @InjectLog
+    private LoggerService loggerService;
     private final SunglassesService sunglassesService;
     private final BrandService brandService;
     private final ColorService colorService;
@@ -40,6 +44,7 @@ public class SunglassesFacadeImpl implements SunglassesFacade {
 
     @Override
     public SunglassesPDPDto findById(Long id) {
+        loggerService.log();
         Optional<Sunglasses> optionalSunglasses = sunglassesService.findById(id);
         if (optionalSunglasses.isEmpty()) {
             throw new RuntimeException("Sunglasses not found");
