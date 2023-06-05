@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/open_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="open_content">
+    <div class="home-img">
+                                <div class="caption-content">
+                                    <div class="font-alt mb-30 titan-title-size-2">Welcome to our Sunglasses Boutique with</div>
+                                    <div class="font-alt mb-30 titan-title-size-3">New Collections 2023</div>
+                                    <div class="font-alt mb-40 titan-title-size-2" style="font-weight: bold">Protect your eyes in style</div>
+                                    <a class="section-scroll btn btn-border-w btn-round home-btn" th:href="@{/sunglasses}">Find a pair</a>
+                                </div>
+    </div>
+</div>
+</body>
+</html>
