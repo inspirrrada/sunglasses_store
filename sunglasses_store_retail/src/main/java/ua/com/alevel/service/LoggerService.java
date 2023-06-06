@@ -1,6 +1,8 @@
 package ua.com.alevel.service;
 
+import ua.com.alevel.logger.LoggerLevel;
+
 public interface LoggerService {
 
-    void log();
+    void print(LoggerLevel level, String message);
 }

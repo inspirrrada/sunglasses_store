@@ -6,6 +6,7 @@ import org.springframework.web.context.request.WebRequest;
 import ua.com.alevel.dto.sunglasses.SunglassesPDPDto;
 import ua.com.alevel.dto.sunglasses.SunglassesPLPDto;
 import ua.com.alevel.facade.sunglasses.SunglassesFacade;
+import ua.com.alevel.logger.LoggerLevel;
 import ua.com.alevel.persistence.entity.sunglasses.Sunglasses;
 import ua.com.alevel.processor.InjectLog;
 import ua.com.alevel.service.LoggerService;
@@ -44,9 +45,10 @@ public class SunglassesFacadeImpl implements SunglassesFacade {
 
     @Override
     public SunglassesPDPDto findById(Long id) {
-        loggerService.log();
+        loggerService.print(LoggerLevel.INFO, "find sunglasses by id " + id + "id");
         Optional<Sunglasses> optionalSunglasses = sunglassesService.findById(id);
         if (optionalSunglasses.isEmpty()) {
+            loggerService.print(LoggerLevel.ERROR, "sunglasses not found by " + id + "id");
             throw new RuntimeException("Sunglasses not found");
         }
         Sunglasses sunglasses = optionalSunglasses.get();

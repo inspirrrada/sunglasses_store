@@ -1,5 +1,6 @@
 package ua.com.alevel.service.sunglasses.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ua.com.alevel.persistence.entity.sunglasses.Sunglasses;
 import ua.com.alevel.persistence.entity.sunglasses.brand.Brand;
@@ -13,6 +14,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class SunglassesServiceImpl implements SunglassesService {
 
@@ -38,6 +40,7 @@ public class SunglassesServiceImpl implements SunglassesService {
 
     @Override
     public Optional<Sunglasses> findById(Long id) {
+        log.info("some message");
         return sunglassesRepository.findById(id);
     }
 
