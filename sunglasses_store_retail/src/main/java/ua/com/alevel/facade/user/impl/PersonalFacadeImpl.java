@@ -1,5 +1,6 @@
 package ua.com.alevel.facade.user.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import ua.com.alevel.service.user.PersonalService;
 import java.time.LocalDate;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class PersonalFacadeImpl implements PersonalFacade {
 
@@ -51,6 +53,7 @@ public class PersonalFacadeImpl implements PersonalFacade {
                               PersonalAddressDto addressDto, WebRequest webRequest) {
         Long id = infoDto.getId();
         Personal personalCurrent = personalService.findById(id);
+        log.info("Change personal data for user with id " + id);
         Map<String, String[]> map = webRequest.getParameterMap();
         if (MapUtils.isNotEmpty(map)) {
             String[] tabType = map.get("update");
@@ -73,11 +76,17 @@ public class PersonalFacadeImpl implements PersonalFacade {
     }
 
     private void updateInfo(Personal personal, PersonalInfoDto dto) {
+        log.info("update info: firstName - " + dto.getFirstName() +
+                ", lastName - " + dto.getLastName() +
+                ", phoneNumber - " + dto.getPhoneNumber() +
+                ", birthdayDate - " + dto.getBirthDay());
         personal.setFirstName(dto.getFirstName());
         personal.setLastName(dto.getLastName());
         personal.setPhoneNumber(dto.getPhoneNumber());
         if (dto.getBirthDay() != null && !dto.getBirthDay().equals("")) {
             personal.setBirthDay(LocalDate.parse(dto.getBirthDay()));
+        } else {
+            log.warn("birthday field is null or empty");
         }
     }
 
@@ -86,19 +95,28 @@ public class PersonalFacadeImpl implements PersonalFacade {
         String oldPasswordCheck = dto.getPasswordOldCheck();
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (!encoder.matches(oldPasswordCheck, oldPassword)) {
+            log.error("wrong old password check");
             throw new PasswordEnteredDoesNotMatchWithCurrentUserPasswordException("Wrong old password!");
         } else {
             String newPassword = dto.getPasswordNew();
             String newPasswordCheck = dto.getPasswordNewRepeat();
             if (!newPassword.equals(newPasswordCheck)) {
+                log.error("wrong new password check");
                 throw new PasswordNewAndPasswordNewRepeatAreDifferentException("Different values of new password!");
             } else {
+                log.info("update password successful");
                 personal.setPassword(encoder.encode(dto.getPasswordNew()));
             }
         }
     }
 
     private void updateAddress(Personal personal, PersonalAddressDto dto) {
+        log.info("update address: zip - " + dto.getZip() +
+                ", region - " + dto.getRegion() +
+                ", city - " + dto.getCity() +
+                ", street - " + dto.getStreet() +
+                ", building - " + dto.getBuilding() +
+                ", apartment - " + dto.getApartment());
         personal.setRegion(dto.getRegion());
         personal.setCity(dto.getCity());
         personal.setZip(dto.getZip());

@@ -1,5 +1,6 @@
 package ua.com.alevel.facade.sunglasses.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.WebRequest;
@@ -63,6 +64,7 @@ public class SunglassesFacadeImpl implements SunglassesFacade {
             if (brands != null) {
                 String brandName = brands[0];
                 Long brandId = brandService.findByBrandName(brandName).getId();
+                loggerService.print(LoggerLevel.INFO, "find all sunglasses by brand " + brandName + " with id " + brandId);
                 return sunglassesService
                         .findByBrand(brandId)
                         .stream()
@@ -73,6 +75,7 @@ public class SunglassesFacadeImpl implements SunglassesFacade {
             if (colors != null) {
                 String colorValue = colors[0];
                 Long colorId = colorService.findByColorValue(colorValue).getId();
+                loggerService.print(LoggerLevel.INFO, "find all sunglasses by color " + colorValue + " with id " + colorId);
                 return sunglassesService
                         .findByColor(colorId)
                         .stream()
@@ -83,6 +86,7 @@ public class SunglassesFacadeImpl implements SunglassesFacade {
             if (frameMaterials != null) {
                 String frameMaterialValue = frameMaterials[0];
                 Long frameMaterialId = frameMaterialService.findByFrameMaterialValue(frameMaterialValue).getId();
+                loggerService.print(LoggerLevel.INFO, "find all sunglasses by frameMaterial " + frameMaterialValue + " with id " + frameMaterialId);
                 return sunglassesService
                         .findByFrameMaterial(frameMaterialId)
                         .stream()
@@ -93,6 +97,7 @@ public class SunglassesFacadeImpl implements SunglassesFacade {
             if (frameShapes != null) {
                 String frameShapeValue = frameShapes[0];
                 Long frameShapeId = frameShapeService.findByFrameShapeValue(frameShapeValue).getId();
+                loggerService.print(LoggerLevel.INFO, "find all sunglasses by frameShape " + frameShapeValue + " with id " + frameShapeId);
                 return sunglassesService
                         .findByFrameShape(frameShapeId)
                         .stream()
@@ -103,6 +108,7 @@ public class SunglassesFacadeImpl implements SunglassesFacade {
             if (lensCategories != null) {
                 String lensCategoryValue = lensCategories[0];
                 Long lensCategoryId = lensCategoryService.findByLensCategoryValue(lensCategoryValue).getId();
+                loggerService.print(LoggerLevel.INFO, "find all sunglasses by lensCategory " + lensCategoryValue + " with id " + lensCategoryId);
                 return sunglassesService
                         .findByLensCategory(lensCategoryId)
                         .stream()
@@ -113,6 +119,7 @@ public class SunglassesFacadeImpl implements SunglassesFacade {
             if (lensMaterials != null) {
                 String lensMaterial = lensMaterials[0];
                 Long lensMaterialId = lensMaterialService.findByLensMaterialValue(lensMaterial).getId();
+                loggerService.print(LoggerLevel.INFO, "find all sunglasses by lensMaterial " + lensMaterial + " with id " + lensMaterialId);
                 return sunglassesService
                         .findByLensMaterial(lensMaterialId)
                         .stream()
@@ -123,6 +130,7 @@ public class SunglassesFacadeImpl implements SunglassesFacade {
             if (sexCategories != null) {
                 String sexCategoryValue = sexCategories[0];
                 Long sexCategoryId = sexCategoryService.findBySexCategoryValue(sexCategoryValue).getId();
+                loggerService.print(LoggerLevel.INFO, "find all sunglasses by sexCategory " + sexCategoryValue + " with id " + sexCategoryId);
                 return sunglassesService
                         .findBySexCategory(sexCategoryId)
                         .stream()
@@ -131,6 +139,7 @@ public class SunglassesFacadeImpl implements SunglassesFacade {
             }
         }
         Collection<Sunglasses> sunglasses = sunglassesService.findAll();
+        loggerService.print(LoggerLevel.INFO, "find all sunglasses");
         return sunglasses
                 .stream()
                 .map(SunglassesPLPDto::new)
